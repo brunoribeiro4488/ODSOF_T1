@@ -1,0 +1,106 @@
+@startuml hello
+
+'-Style----------------------------------------------------------------------------------------------------------------
+
+autonumber
+
+skinparam DefaultTextAlignment center
+
+skinparam BackgroundColor #fafdff
+
+skinparam sequence {
+    LifeLineBorderColor DodgerBlue
+    LifeLineBackgroundColor APPLICATION
+
+    ActorBackgroundColor APPLICATION
+    ActorBorderColor DodgerBlue
+
+    BackgroundColor #FFFFFF
+    ArrowColor DodgerBlue
+    BorderColor DodgerBlue
+
+    ParticipantBackgroundColor DodgerBlue
+    ParticipantFontColor #FFFFFF
+    ParticipantBorderColor DodgerBlue
+
+    GroupBorderColor #082642
+    GroupBackgroundColor APPLICATION
+}
+
+skinparam note {
+    LifeLineBorderColor DodgerBlue
+    LifeLineBackgroundColor APPLICATION
+
+    ActorBackgroundColor APPLICATION
+    ActorBorderColor DodgerBlue
+
+    BackgroundColor #FFFFFF
+    ArrowColor DodgerBlue
+    BorderColor DodgerBlue
+
+    ParticipantBackgroundColor DodgerBlue
+    ParticipantFontColor #FFFFFF
+    ParticipantBorderColor DodgerBlue
+
+    GroupBorderColor #082642
+    GroupBackgroundColor APPLICATION
+}
+
+'-Title----------------------------------------------------------------------------------------------------------------
+
+title GetPopularPosts
+
+'-Actors/Participants--------------------------------------------------------------------------------------------------
+
+actor "<b>User" as A
+participant "<b>:postRoute" as CR
+participant "<b>:GetPopularPostsController" as CC
+participant "<b>:postDetailsMap" as CM
+participant "<b>:GetPopularPosts" as CS
+participant "<b>post\n<b>:Post" as CD
+participant "<b>:sequelizePostRepo" as CREP
+participant "<b>:postSchema" as CSC
+participant "<b>listPost\n<b>:List<PostDetails>" as LPD
+
+'-Associations---------------------------------------------------------------------------------------------------------
+
+activate A
+
+A -> CR: HTTP request (get)
+activate CR
+
+CR -> CC: get(req, res, next)
+activate CC
+
+CC -> CS : execute()
+activate CS
+CS -> CREP : list = GetPopularPosts()
+activate CREP
+CREP -> CSC : findAll()
+activate CSC
+deactivate CSC
+deactivate CREP
+
+loop [listPosts]
+CS -> CM : PostDetails = toDomain(Post)
+activate CM
+CM -> CD : create()
+activate CD
+deactivate CD
+deactivate CM
+CS-> LPD : add(PostDetails)
+activate LPD
+deactivate LPD
+
+end
+
+CS -> CC : listPostDetails
+deactivate CS
+CC -> CR: listPostDetails
+deactivate CC
+
+CR -> A: Mostra os detalhes do Post
+deactivate CR
+'----------------------------------------------------------------------------------------------------------------------
+
+@enduml
