@@ -9,4 +9,5 @@ npm-debug.log
 /coverage
 report.html
 .idea
+.gradle
  

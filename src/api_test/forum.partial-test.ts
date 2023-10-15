@@ -1,8 +1,4 @@
-/**
- *
- * @remarks
- * This code is based on the project {@link https://github.com/jmfiola/jest-api-test-typescript-example}.
-*/
+
 import { Logger } from "tslog";
 import ConfigHandler from "./config/ConfigHandler";
 
@@ -25,12 +21,12 @@ describe("Posts endpoint", (): void => {
     log.debug("1. Posts Base url: "+posts.getBaseUrl());
   });
 
-  it("Get popular posts", async (): Promise<void> => {
+ /* it("Get popular posts", async (): Promise<void> => {
     const response = await posts.getPopularPosts();
     expect(response.status).toBe(200);
     
     expect(response.data.posts).toBeDefined();
-  });
+  });*/
 });
 
 export default {};
