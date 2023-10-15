@@ -9,6 +9,7 @@ interface PostRowProps extends Post {
   onUpvoteClicked: () => void;
   onDownvoteClicked: () => void;
   isLoggedIn: boolean;
+  page?: string;
 }
 
 const PostRow: React.FC<PostRowProps> = (props) => (
